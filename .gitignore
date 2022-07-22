@@ -1,0 +1,6 @@
+keys.json
+venv
+__pycache__
+*.csv
+.idea
+.env
