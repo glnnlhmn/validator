@@ -24,16 +24,7 @@ class AttributeDescriptor:
 def validate_short_code(short_code: str) -> str:
     if short_code is None:
         return None
-    elif isinstance(short_code, str):
-        if len(short_code) == 4:
-            return short_code
-        raise InvalidDSPShortCode("Length of DSP short code did not equal 4")
-    else:
-        raise InvalidDataType("DSP short code value must ba a string")
-
-
-def validate_short_code(short_code: str) -> str:
-    if short_code == '':
+    elif short_code == '':
         return ''
     elif isinstance(short_code, str):
         if len(short_code) == 4:
