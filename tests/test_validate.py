@@ -1,98 +1,69 @@
-from validator.validate_stub import DSP
-# import sys
+# test_short_code.py
+from dataclasses import dataclass
+
+from my_validator.exception import InvalidDSPShortCode, InvalidDataType
+from my_validator.validate import AttributeDescriptor
+from my_validator.validate import validate_short_code
 
 
-def test_create_valid_dsp():
-    # print(sys._getframe().f_code.co_name)
+@dataclass()
+class DSP:
+    short_code: str = AttributeDescriptor(validate_short_code)
+
+
+def test_create_dsp():
     dsp = DSP("Test")
-    # print(f"    {dsp}  address={id(dsp)}")
-
-#   pprint(dir(dsp))
+    assert dsp.short_code == "Test"
 
 
 def test_change_dsp_short_code():
-    # print(sys._getframe().f_code.co_name)
     dsp = DSP("Test")
-    # print(f"    ORG: {dsp}  address={id(dsp)}")
     dsp.short_code = "MODE"
-    # print(f"    MOD: {dsp}  address={id(dsp)}")
+    assert dsp.short_code == "MODE"
 
 
 def test_change_dsp_short_code_to_non_str():
-    # print(sys._getframe().f_code.co_name)
     dsp = DSP("Test")
-    # print(f"    {dsp} address={id(dsp)}")
-    # print("      try:  dsp.short_code = 1")
     try:
         dsp.short_code = 1
-    except Exception as e:
-        # print(F"  Exception: {e.args}")
-        return False
+    except InvalidDataType:
+        assert True, f"Non string: Error handled"
+    except:
+        assert False, f"Non string: Unexpected error not handled"
+    else:
+        assert False, f"Non string: Error not raised"
 
 
 def test_change_dsp_short_code_to_short_str():
-    # print(sys._getframe().f_code.co_name)
     dsp = DSP("Test")
-    # print(f"    {dsp} address={id(dsp)}")
-    # print("     try: dsp.short_code = SUM")
     try:
         dsp.short_code = "SUM"
-    except Exception as e:
-        # print(F"  Exception: {e.args}")
-        return False
-
-# OUTPUT:
-#     try: dsp.short_code = SUM
-#          SETTING
-#          validate_code_len
-#          Exception: ("'int' object is not callable",)  ?? Why?
+    except InvalidDSPShortCode:
+        assert True, f"String to short: Error handled"
+    except:
+        assert False, f"String to short: Unexpected error not handled"
+    else:
+        assert False, f"String to short: Error not raised"
 
 
 def test_change_dsp_short_code_to_long_str():
-    # print(sys._getframe().f_code.co_name)
     dsp = DSP("Test")
-    # print(f"    {dsp} address={id(dsp)}")
-    # print("     try  dsp.short_code = SHADE")
     try:
         dsp.short_code = "SHADE"
-    except Exception as e:
-        # print(F"  Exception: {e.args}")
-        return False
+    except InvalidDSPShortCode:
+        assert True, f"String to long: Error handled"
+    except:
+        assert False, f"String to long: Unexpected error not handled"
+    else:
+        assert False, f"String to long: Error not raised"
 
 
-def test_set_empty_dsp():
-    # print(sys._getframe().f_code.co_name)
-    dsp = DSP("Test")
-    # print(f"    {dsp} address={id(dsp)}")
-    # print("   try dsp.short_code = None")
-    try:
-        dsp.short_code = None
-    except Exception as e:
-        # print(F"  Exception: {e.args}")
-        return False
-
-
-def test_create_empty_dsp():
-    # print(sys._getframe().f_code.co_name)
-    # print(" try with empty code  dsp = DSP()")
-    try:
-        dsp = DSP()
-    except Exception as e:
-        # print(F"  Exception: {e.args}")
-        return False
-
-
-# test_create_valid_dsp()
-# print('--------------------------\n')
-# test_change_dsp_short_code()
-# print('--------------------------\n')
-# test_change_dsp_short_code_to_non_str()
-# print('--------------------------\n')
-# test_change_dsp_short_code_to_short_str()
-# print('--------------------------\n')
-# test_change_dsp_short_code_to_long_str()
-# print('--------------------------\n')
-# test_set_empty_dsp()
-# print('--------------------------\n')
-# test_create_empty_dsp()
-# print('--------------------------\n')
+# def test_set_empty_dsp():
+#     dsp = DSP("Test")
+#     dsp.short_code = ""
+#     assert dsp.short_code is None
+#
+#
+# def test_create_empty_dsp():
+#     dsp = DSP()
+#     assert dsp.short_code is None
