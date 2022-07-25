@@ -57,3 +57,9 @@ def test_set_empty_dsp():
 def test_create_empty_dsp():
     dsp = MyClass()
     assert isinstance(dsp.short_code, AttributeDescriptor)
+
+
+def test_set_none_dsp():
+    dsp = MyClass("Test")
+    dsp.short_code = None
+    assert dsp.short_code is None

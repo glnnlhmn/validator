@@ -30,16 +30,15 @@ class AttributeDescriptor:
 
 def validate_short_code(short_code: str) -> bool:
     """
-    This function validates that the short code is a string, and that it is 4 characters long
-    or that the length is zero.
+    This function validates that the short code is a string, and that it is 4 characters long,
+    the length is zero, or is none.
 
     :param short_code: The short code of the DSP
     :type short_code: str
     :return: A boolean value
     """
-    if isinstance(short_code, AttributeDescriptor):
-        return True
-    elif short_code == '':
+    if isinstance(short_code, AttributeDescriptor) or\
+            short_code == '' or short_code is None:
         return True
     elif isinstance(short_code, str):
         if len(short_code) == 4:
