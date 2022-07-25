@@ -7,5 +7,11 @@ from my_validator.validate import AttributeDescriptor, validate_short_code
 class DSP:
     short_code: str = AttributeDescriptor(validate_short_code)
 
+    def __post_init__(self):
+        if isinstance(self.short_code, AttributeDescriptor):
+            self.short_code = None
 
-dsp = DSP("TTTT")
+
+dsp = DSP("aska")
+
+print(f'DSP Short code: {dsp.short_code}')
