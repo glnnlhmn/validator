@@ -15,23 +15,38 @@ class AttributeDescriptor:
         return instance.__dict__[self.name]
 
     def __set__(self, instance, value):
+        """
+        If the validator is not None, then call the validator function with the value, and if the validator function returns
+        False, raise a ValueError exception
+
+        :param instance: The instance of the class that the descriptor is being accessed from
+        :param value: The value that is being assigned to the attribute
+        """
         if self.validator:
             if not self.validator(value):
                 raise ValueError(f"Invalid {self.name}: {value}")
         instance.__dict__[self.name] = value
 
 
-def validate_short_code(short_code: str) -> str:
-    if short_code is None:
-        return None
+def validate_short_code(short_code: str) -> bool:
+    """
+    This function validates that the short code is a string, and that it is 4 characters long
+    or that the length is zero.
+
+    :param short_code: The short code of the DSP
+    :type short_code: str
+    :return: A boolean value
+    """
+    if isinstance(short_code, AttributeDescriptor):
+        return True
     elif short_code == '':
-        return ''
+        return True
     elif isinstance(short_code, str):
         if len(short_code) == 4:
-            return short_code
-        raise InvalidDSPShortCode("Length of DSP short code did not equal 4")
+            return True
+        raise InvalidDSPShortCode("Length of DSP short code length did not equal 4")
     else:
-        raise InvalidDataType("DSP short code value must ba a string")
+        raise InvalidDataType("DSP short code value must be a string")
 
 
 def validate_id(test_id: int) -> int:
