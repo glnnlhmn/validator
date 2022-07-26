@@ -33,6 +33,18 @@ All would be accepted.  Any other entries will raise an error to the calling fun
 
 ## Requirements
 
-This is pure python.  
+Seee requirements.txt
 
-Tests were written in pytest. So if you are running the testing you will need pytest.
+## Setup
+
+1. Fork this project.
+2. Clone to your local machine.
+3. Create virtual environment.
+```
+$ cd validator
+~/validator$ python -m venv venv
+~/validator$ venv/scripts/activate
+(venv) ~/validator$ pip install -r requirements.txt
+```
+
+
