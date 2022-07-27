@@ -1,17 +1,19 @@
 # file:  validate.py
-
 from my_validator.exception import InvalidDataType, InvalidDSPShortCode, NonPositiveInteger
 
 
 class AttributeDescriptor:
-    def __init__(self, validator=None):
+
+    def __init__(self, validator, *args):
+        self.args = args
         self.validator = validator
 
     def __set_name__(self, owner, name):
         self.name = name
 
     def __get__(self, instance, owner):
-        if not instance: return self
+        if not instance:
+            return self
         return instance.__dict__[self.name]
 
     def __set__(self, instance, value):
