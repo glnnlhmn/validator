@@ -26,26 +26,20 @@ def test_change_dsp_short_code():
 
 def test_change_dsp_short_code_to_non_str():
     dsp = MyClass("Test")
-    with pytest.raises(InvalidDataType) as exc_info:
+    with pytest.raises(InvalidDataType, match='value must be a string'):
         dsp.short_code = 1
-    expected = 'value must be a string'
-    assert expected in str(exc_info.value)
 
 
 def test_change_dsp_short_code_to_short_str():
     dsp = MyClass("Test")
-    with pytest.raises(InvalidDSPShortCode) as exc_info:
+    with pytest.raises(InvalidDSPShortCode, match='length did not equal 4'):
         dsp.short_code = "ssn"
-    expected = 'length did not equal 4'
-    assert expected in str(exc_info.value)
 
 
 def test_change_dsp_short_code_to_long_str():
     dsp = MyClass("Test")
-    with pytest.raises(InvalidDSPShortCode) as exc_info:
+    with pytest.raises(InvalidDSPShortCode, match='length did not equal 4'):
         dsp.short_code = "shade"
-    expected = 'length did not equal 4'
-    assert expected in str(exc_info.value)
 
 
 def test_set_empty_dsp():
